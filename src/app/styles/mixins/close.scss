@@ -1,0 +1,22 @@
+@use "../variables";
+
+@mixin set-close-link-variant($color: variables.$gray-300, $hover-color: variables.$primary) {
+    color: $color;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+        color: $hover-color;
+        text-decoration: none;
+        opacity: 1;
+    }
+    &:active {
+        text-decoration: none;
+    }
+}
+
+@mixin set-close-link-size($size: variables.$font-size-base) {
+    font-size: $size !important;
+    i {
+        font-size: $size;
+    }
+}

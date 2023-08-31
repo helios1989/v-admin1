@@ -1,0 +1,27 @@
+@use "../mixins/hover";
+@use "../mixins/link";
+@use "../variables";
+
+a {
+    color: variables.$link-color;
+    @include hover.hover {
+        color: variables.$link-hover-color;
+    }
+}
+
+a {
+    &.link-primary {
+        @include link.link-variant(variables.$primary, variables.$link-decoration, variables.$primary, variables.$link-hover-decoration);
+    }
+
+    &.link-secondary {
+        @include link.link-variant(variables.$gray-500, none, variables.$primary, none);
+    }
+
+    &.link-major {
+        @include link.link-variant(variables.$gray-800, none, variables.$primary, none);
+    }
+    &.link-muted {
+        @include link.link-variant(variables.$gray-600, none, variables.$primary, none);
+    }
+}

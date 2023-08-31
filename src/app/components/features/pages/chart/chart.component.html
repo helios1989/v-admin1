@@ -1,0 +1,46 @@
+<h1>HELLO VERGE</h1>
+<thy-button class="mr-2" thyType="primary">Primary Button</thy-button>
+<thyButton class="mr-2" thyButton="primary">Primary XX</thyButton>
+<button class="mr-2"  thyButton="info">Info</button>
+<button class="mr-2" thyButton="warning">Warning</button>
+<button class="mr-2" thyButton="danger">Danger</button>
+<button class="mr-2"  thyButton="success">Success</button>
+<button class="mr-2" thyButton="primary" thyIcon="plus">New</button>
+<button class="mr-2" thyButton="primary">New</button>
+<input type="text" [(ngModel)]="myProperty">
+<textArea appTest1="{{myProperty}}">vergel testing{{myProperty}}</textArea>
+<highcharts-chart
+
+    #chartContainer
+    [Highcharts]="Highcharts"
+    [options]="chartOptions"
+    [(update)]="updateFlag"
+    [runOutsideAngular]="false"
+    [oneToOne]="true"
+    [callbackFunction]="chartCallback"
+    id="chart-container">
+    
+    {{chartOptions }}
+</highcharts-chart>
+<app-comopnent1></app-comopnent1>
+-----fa-border
+<div [ngSwitch]="userRole">
+    <ng-template [ngSwitchCase]="'admin'">
+      <p>Welcome, Admin! You have full access.</p>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'user'">
+      <p>Welcome, User! You have limited access.</p>
+    </ng-template>
+    <ng-template ngSwitchDefault>
+      <p>Welcome, Guest! Please sign in to access content.</p>
+    </ng-template>
+  </div>
+  ----child-example component
+  <!-- app-parent.component.html -->
+<app-child>
+    <p #projectedContent>Content projected from parent component</p>
+  </app-child>
+-----fa-border
+onpush-example
+<app-onpush-example></app-onpush-example>
+  

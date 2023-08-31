@@ -1,0 +1,245 @@
+@use 'sass:map';
+@use '../bootstrap/mixins/breakpoints.scss';
+@use '../mixins/hover.scss';
+@use '../bootstrap/variables.scss' as bootstrap-variables;
+@use '../mixins/tables.scss';
+@use '../variables.scss';
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    color: variables.$table-color;
+    background-color: variables.$table-bg; // Reset for nesting within parents with `background-color`.
+
+    th,
+    td {
+        padding: variables.$table-default-header-cell-padding;
+        vertical-align: middle;
+        border-bottom: variables.$table-border-width solid variables.$table-border-color;
+
+        // 处理名称长度过长表格换行的问题
+        .thy-avatar {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    tbody tr {
+        &.clear-hover {
+            cursor: default !important;
+            box-shadow: initial !important;
+            background-color: transparent !important;
+
+            td {
+                border-bottom: 0;
+            }
+        }
+    }
+
+    @include tables.table-size(
+        variables.$table-cell-height,
+        variables.$table-cell-height,
+        variables.$table-header-padding,
+        variables.$table-cell-padding
+    );
+
+    .table {
+        background-color: bootstrap-variables.$body-bg;
+    }
+}
+
+.table-default {
+    @include tables.table-set-header(
+        left,
+        bottom,
+        400,
+        variables.$table-border-width,
+        transparent,
+        variables.$table-border-color,
+        variables.$table-default-header-color,
+        variables.$table-default-header-padding
+    );
+}
+
+.table-bordered {
+    border: variables.$table-border-width solid variables.$table-border-color;
+
+    th,
+    td {
+        border: variables.$table-border-width solid variables.$table-border-color;
+    }
+
+    @include tables.table-set-header(
+        center,
+        middle,
+        400,
+        variables.$table-border-width,
+        variables.$table-bordered-bg,
+        variables.$table-border-color,
+        variables.$table-bordered-header-color,
+        0
+    );
+}
+
+.table-boxed {
+    border: variables.$table-border-width solid variables.$table-border-color;
+
+    tbody {
+        // 最后一行去掉 border-bottom，否则会和 table 的边框重叠加粗
+        tr:last-child {
+            td {
+                border-bottom: 0px;
+            }
+        }
+    }
+
+    @include tables.table-set-header(
+        left,
+        middle,
+        400,
+        variables.$table-border-width,
+        variables.$table-bordered-bg,
+        variables.$table-border-color,
+        variables.$table-bordered-header-color,
+        0
+    );
+}
+
+.table-xlg {
+    @include tables.table-size(
+        variables.$table-cell-height-xlg,
+        variables.$table-cell-height-xlg,
+        variables.$table-header-padding-xlg,
+        variables.$table-cell-padding-xlg
+    );
+}
+
+.table-lg {
+    @include tables.table-size(
+        variables.$table-cell-height-lg,
+        variables.$table-cell-height-lg,
+        variables.$table-header-padding-lg,
+        variables.$table-cell-padding-lg
+    );
+}
+
+.table-md {
+    @include tables.table-size(
+        variables.$table-cell-height,
+        variables.$table-cell-height,
+        variables.$table-header-padding,
+        variables.$table-cell-padding
+    );
+}
+
+.table-sm {
+    @include tables.table-size(
+        variables.$table-cell-height-sm,
+        variables.$table-cell-height-sm,
+        variables.$table-header-padding-sm,
+        variables.$table-cell-padding-sm
+    );
+}
+
+.table-xs {
+    @include tables.table-size(
+        variables.$table-cell-height-xs,
+        variables.$table-cell-height-xs,
+        variables.$table-header-padding-xs,
+        variables.$table-cell-padding-xs
+    );
+}
+
+.table-fixed {
+    table-layout: fixed;
+}
+
+.table-hover {
+    tbody tr {
+        @include hover.hover {
+            cursor: pointer;
+            background-color: variables.$table-hover-color;
+            // @include table-hover-box-shadow($table-hover-color);
+        }
+    }
+}
+
+.table-draggable {
+    thead tr {
+        th:first-child {
+            padding-left: variables.$table-draggable-first-td-padding-left;
+        }
+    }
+
+    tbody tr {
+        td {
+            position: relative;
+
+            &:first-child {
+                padding-left: variables.$table-draggable-first-td-padding-left;
+            }
+
+            .table-draggable-icon {
+                position: absolute;
+                display: none;
+                color: variables.$table-draggable-icon-color;
+                left: variables.$table-draggable-icon-left;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        @include hover.hover {
+            cursor: pointer;
+
+            td {
+                .table-draggable-icon {
+                    display: block;
+                }
+            }
+        }
+
+        &.table-draggable-ignore-item {
+            @include hover.hover {
+                cursor: inherit;
+                box-shadow: none;
+
+                td {
+                    .table-draggable-icon {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.table-responsive {
+    @each $breakpoint in map.keys(bootstrap-variables.$grid-breakpoints) {
+        $next: breakpoints.breakpoint-next($breakpoint, bootstrap-variables.$grid-breakpoints);
+        $infix: breakpoints.breakpoint-infix($next, bootstrap-variables.$grid-breakpoints);
+
+        &#{$infix} {
+            @include breakpoints.media-breakpoint-down($breakpoint) {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: -ms-autohiding-scrollbar; // See https://github.com/twbs/bootstrap/pull/10057
+
+                // Prevent double border on horizontal scroll due to use of `display: block;`
+                > .table-bordered {
+                    border: 0;
+                }
+            }
+        }
+    }
+}
+
+.table-group {
+    tbody tr:not(.thy-table-group) {
+        td:first-child {
+            padding-left: variables.$table-group-first-cell-padding-left;
+        }
+    }
+}

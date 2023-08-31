@@ -1,0 +1,77 @@
+@use "../mixins/utilities";
+@use "../variables";
+
+.icon-text {
+    display: inline-block;
+    position: relative;
+    font-size: variables.$font-size-base;
+    // * {
+    //     vertical-align: middle;
+    // }
+
+    thy-icon {
+        display: inline-block;
+        margin-right: variables.$icon-text-horizontal-space;
+        width: 20px;
+        font-size: 20px;
+        svg {
+            @include utilities.absolute-vertical-align-middle(true);
+        }
+    }
+
+    &-lg {
+        thy-icon {
+            width: 24px;
+            font-size: 24px;
+        }
+    }
+
+    &-sm {
+        thy-icon {
+            width: 16px;
+            font-size: 16px;
+        }
+    }
+
+    &-xs {
+        font-size: variables.$font-size-sm;
+        thy-icon {
+            width: variables.$font-size-sm;
+            font-size: variables.$font-size-base;
+        }
+    }
+
+    // #region 旧 wtf 兼容处理
+    i {
+        display: inline-block;
+        margin-right: 0.3em;
+        width: 20px;
+        font-size: 20px;
+        &:before {
+            @include utilities.absolute-vertical-align-middle(true);
+        }
+    }
+
+    &-lg {
+        i {
+            width: 24px;
+            font-size: 24px;
+        }
+    }
+
+    &-sm {
+        i {
+            width: 18px;
+            font-size: 18px;
+        }
+    }
+
+    &-xs {
+        font-size: variables.$font-size-sm;
+        i {
+            width: variables.$font-size-base;
+            font-size: variables.$font-size-base;
+        }
+    }
+    // #endregion
+}

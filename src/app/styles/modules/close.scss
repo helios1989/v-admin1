@@ -1,0 +1,75 @@
+@use "../mixins/close";
+@use "../variables";
+
+.close {
+    // float: right;
+    font-size: variables.$close-font-size;
+    font-weight: variables.$close-font-weight;
+    // line-height: 1;
+    text-shadow: variables.$close-text-shadow;
+    opacity: 1;
+    @include close.set-close-link-variant(variables.$close-text-color, variables.$primary);
+    // Opinionated: add "hand" cursor to non-disabled .close elements
+    &:not(:disabled):not(.disabled) {
+        cursor: pointer;
+    }
+}
+
+// Additional properties for button version
+// iOS requires the button element instead of an anchor tag.
+// If you want the anchor version, it requires `href="#"`.
+// See https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
+// stylelint-disable property-no-vendor-prefix, selector-no-qualifying-type
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    &:focus {
+        outline: none;
+    }
+} // stylelint-enable
+
+.close-link {
+    @include close.set-close-link-variant();
+    @include close.set-close-link-size();
+}
+
+.close-link-sm {
+    @include close.set-close-link-size(variables.$font-size-sm);
+}
+
+.close-link-md {
+    @include close.set-close-link-size(variables.$font-size-md);
+}
+
+.close-link-lg {
+    @include close.set-close-link-size(variables.$font-size-lg);
+}
+
+.close-link-danger {
+    @include close.set-close-link-variant(variables.$gray-300, variables.$danger);
+}
+
+.remove-link {
+    @include close.set-close-link-variant(variables.$gray-400, variables.$danger);
+    @include close.set-close-link-size(variables.$font-size-base);
+    .remove-link-icon {
+        background: variables.$white;
+        border-radius: 50%;
+    }
+}
+
+$removeLinkSizes: (
+    'xs': variables.$font-size-sm,
+    'sm': variables.$font-size-base,
+    'md': variables.$font-size-base,
+    'default': variables.$font-size-base,
+    'lg': variables.$font-size-md
+);
+
+@each $size, $value in $removeLinkSizes {
+    .remove-link-#{$size} {
+        @include close.set-close-link-size($value);
+    }
+}

@@ -1,0 +1,14 @@
+@use "../mixins/close";
+@use "../variables";
+
+.close {
+    @include close.set-close-link-variant(variables.$gray-300, variables.$primary);
+}
+
+.close-link {
+    @include close.set-close-link-variant();
+}
+
+.close-link-danger {
+    @include close.set-close-link-variant(variables.$gray-300, variables.$danger);
+}
